@@ -113,7 +113,62 @@
 			<div class="col-lg-11">
 				<h2>System Manual</h2>
 				<div class="col-lg-11 col-lg-offset-1">
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur accumsan nec quam non fringilla. Phasellus nec consectetur nisi. Suspendisse sed nisi laoreet, condimentum mauris vitae, elementum felis. Cras mollis magna placerat ante porttitor semper. In at molestie sem. Phasellus nec enim mi. Pellentesque facilisis aliquet nulla, eget feugiat magna fringilla eu. Donec posuere ligula vitae est fringilla dapibus.<br>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce erat ligula, venenatis eget bibendum nec, viverra interdum purus. Nulla nec ipsum eget augue interdum faucibus. Praesent feugiat dui ac odio eleifend semper. Mauris vestibulum lectus ut tortor lacinia consequat. Cras vulputate posuere pretium. Vestibulum faucibus tincidunt facilisis. Curabitur bibendum ultricies nisl, id tristique urna congue et. Suspendisse eget consequat odio. Fusce ornare nulla et lorem interdum ultricies et eu erat. In aliquam vestibulum neque et tincidunt. Suspendisse elementum sapien quis dictum viverra. Suspendisse eget lorem auctor, lacinia arcu ut, volutpat dui. Sed ornare lectus sapien.</p>
+					<h3>Deployment</h3>
+					<div class="col-lg-11 col-lg-offset-1">
+						<p>The product is deployed on Ubuntu 14.04 machines. The products dependencies are:</p>
+						<ul>
+							<li>Java</li>
+							<li>ElasticSearch</li>
+							<li>Git</li>
+							<li>Node.js. With packages:
+								<ul>
+									<li>Express</li>
+									<li>Forever</li>
+									<li>ElasticSearch.js</li>
+									<li>pm2</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+					<h3>Installation</h3>
+					<div class="col-lg-11 col-lg-offset-1">
+						<ul>
+							<li>Install Java and ElasticSearch. Run ElasticSearch as a service
+								<ul>
+									<li>sudo apt-get install openjdk-7-jre-headless -y</li>
+									<li>wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.1.1.deb</li>
+									<li>sudo dpkg -i elasticsearch-1.1.1.deb</li>
+									<li>sudo service elasticsearch start</li>
+								</ul>
+							</li>
+							<li>Install Git and Node. Clone our repository
+								<ul>
+									<li>sudo apt-get install git</li>
+									<li>sudo apt-get install nodejs, npm</li>
+									<li>git clone https://github.com/politicsmapper/PoliticsMapper.git</li>
+								</ul>
+							</li>
+							<li>Start the retrieval, processing and indexing of the Hansard data using the scripts provided for this (in our repository)
+								<ul>
+									<li>Firstly download the xml data as described on theyworkforyou.com under “raw data”</li>
+									<li>Then: python ElasticSearch/uploader.py &lt;path-to-scraped-xml&gt;</li>
+								</ul>
+							</li>
+							<li>Produce index of ids
+								<ul>
+									<li>python script: ElasticSearch/index.py</li>
+								</ul>
+							</li>
+							<li>Install our node application’s dependencies and start the application using pm2
+								<ul>
+									<li>cd nodeapp</li>
+									<li>npm install</li>
+									<li>pm2 start app.js</li>
+								</ul>
+							</li>
+						</ul>
+						<p>A set of deployment scripts have also been written to continuously deploy the app on changes on a given branch on the git repository.</p>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -160,7 +215,6 @@
 						<img src="img/searchsimilar.png" class="img-responsive">
 						<p>Alternatively, you may have wished to search similar results by going on the “Similar” option, in which case the system will display to you another set of results that are semantically similar.</p>
 					</div>
-
 				</div>
 			</div>
 		</div>

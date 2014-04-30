@@ -382,7 +382,24 @@
 			<div class="col-lg-11">
 				<h2>Architectural Diagrams</h2>
 				<div class="col-lg-11 col-lg-offset-1">
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur accumsan nec quam non fringilla. Phasellus nec consectetur nisi. Suspendisse sed nisi laoreet, condimentum mauris vitae, elementum felis. Cras mollis magna placerat ante porttitor semper. In at molestie sem. Phasellus nec enim mi. Pellentesque facilisis aliquet nulla, eget feugiat magna fringilla eu. Donec posuere ligula vitae est fringilla dapibus.<br>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce erat ligula, venenatis eget bibendum nec, viverra interdum purus. Nulla nec ipsum eget augue interdum faucibus. Praesent feugiat dui ac odio eleifend semper. Mauris vestibulum lectus ut tortor lacinia consequat. Cras vulputate posuere pretium. Vestibulum faucibus tincidunt facilisis. Curabitur bibendum ultricies nisl, id tristique urna congue et. Suspendisse eget consequat odio. Fusce ornare nulla et lorem interdum ultricies et eu erat. In aliquam vestibulum neque et tincidunt. Suspendisse elementum sapien quis dictum viverra. Suspendisse eget lorem auctor, lacinia arcu ut, volutpat dui. Sed ornare lectus sapien.</p>
+					<h3>Summary of System Architecture</h3>
+					<div class="col-lg-11 col-lg-offset-1">
+						<p>Our web application is built using node.js. The node app sits on top our search backend which is implemented using ElasticSearch. Our search backend retrieves, pre-processes, indexes, and analyses the Hansard data. The whole thing is hosted on a cluster of Azure servers.</p>
+						<img src="img/systemarch.png" class="img-responsive">
+					</div>
+					<h3>The Web Application</h3>
+					<div class="col-lg-11 col-lg-offset-1">
+						<p>The web application is built using node.js. We use the framework express, which is a popular framework for doing web applications and services. Furthermore, we use the jade library to make templates that generate the HTML for our pages.<br>The node application’s main purpose is to handle requests from the end-user, query the search back-end, and respond to the end-user with the results from the queries. It communicates with the search back-end through a REST API which is used for performing search and similarity queries.</p>
+					</div>
+					<h3>Data Retrieval, Processing and Indexing</h3>
+					<div class="col-lg-11 col-lg-offset-1">
+						<p>The main functionality of our application is the indexing and analysis of the Hansard data. We index the data to make it searchable and we use the TF-IDF algorithm to find similarities in the data. We use ElasticSearch as the foundation of our search engine. ElasticSearch allows indexing of data through a REST API.<br>In order to index the data, we start by synchronising with a repository of xml files containing all the debate data. This data is converted to JSON and preprocessed before indexing. The indexing process consists of two steps. Firstly, we generate an index of ids used for lookups of a paragraphs context (prior and subsequent paragraphs), Secondly, the processed JSON data is indexed for searching using ElasticSearch’s API.</p>
+					</div>
+					<h3>Server Infrastructure</h3>
+					<div class="col-lg-11 col-lg-offset-1">
+						<p>PoliticsMapper is hosted on Azure servers. The servers are connected through a virtual network. Each server has an instance of ElasticSearch and an instance of our node.js application running. ElasticSearch automatically detects other nodes in the network and distributes the load and the data so it’s available if one of the nodes go down. All the servers are accessed through a load balancer. This infrastructure allows us to easily scale the product by simply adding more nodes to the cluster.</p>
+						<img src="img/serverstruct.png" class="img-responsive">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -390,7 +407,14 @@
 			<div class="col-lg-11">
 				<h2>Technical Achievements</h2>
 				<div class="col-lg-11 col-lg-offset-1">
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur accumsan nec quam non fringilla. Phasellus nec consectetur nisi. Suspendisse sed nisi laoreet, condimentum mauris vitae, elementum felis. Cras mollis magna placerat ante porttitor semper. In at molestie sem. Phasellus nec enim mi. Pellentesque facilisis aliquet nulla, eget feugiat magna fringilla eu. Donec posuere ligula vitae est fringilla dapibus.<br>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce erat ligula, venenatis eget bibendum nec, viverra interdum purus. Nulla nec ipsum eget augue interdum faucibus. Praesent feugiat dui ac odio eleifend semper. Mauris vestibulum lectus ut tortor lacinia consequat. Cras vulputate posuere pretium. Vestibulum faucibus tincidunt facilisis. Curabitur bibendum ultricies nisl, id tristique urna congue et. Suspendisse eget consequat odio. Fusce ornare nulla et lorem interdum ultricies et eu erat. In aliquam vestibulum neque et tincidunt. Suspendisse elementum sapien quis dictum viverra. Suspendisse eget lorem auctor, lacinia arcu ut, volutpat dui. Sed ornare lectus sapien.</p>
+					<h3>Successfully Used TF-IDF Algorithm to Find Similarities in Large Dataset</h3>
+					<div class="col-lg-11 col-lg-offset-1">
+						<p>One of our main technical achievements is that we successfully have implemented the TF-IDF algorithm for similarity analysis.<br>TF-IDF is an abbreviation of Term Frequency-Inverse Document Frequency. The idea is basically to count the number of occurrences of each unique term in a document (where the document is a segment of the data). We say this is the term frequency of the term t in a specific document d and we denote this as tft,d where t is our term and d is the specific document. We now have a frequency measure of each term in a document. We want to compare this to the complete collection of documents (the dataset as a whole) in order to see which other documents are similar to this one. Here we could just compare the term frequency of our document to all the others and see which are most similar, but not all terms are going to be relevant. For example, the term frequency of the term “and” will be a high in all documents and is therefore useless as a similarity measure. We denote the document frequency of t as dft, which is defined by the number of documents which contain t. The closer the document frequency of a term is to the total number of documents N, the less important that term is in the similarity calculation. So in order to weigh the term frequency of t in d with the “uniqueness” of the term in the complete document collection, we define the inverse document frequency as idft = log( N / dft). We combine these two measures to tf-idft,d = tft,d×idft. We now have a measure of how relevant a term is in a document.</p>
+					</div>
+					<h3>Built Scalable Web Application</h3>
+					<div class="col-lg-11 col-lg-offset-1">
+						<p>Another of our main technical achievements is our simple and modular architecture. Even though the functionality of a search engine like PoliticsMapper is fairly complex, we have managed to define an architecture that allows us to easily exchange functional components, scale the server infrastructure. We have been able to do this because of our thorough research and ongoing discussions with our clients.</p>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -398,7 +422,19 @@
 			<div class="col-lg-11">
 				<h2>Design Patterns</h2>
 				<div class="col-lg-11 col-lg-offset-1">
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur accumsan nec quam non fringilla. Phasellus nec consectetur nisi. Suspendisse sed nisi laoreet, condimentum mauris vitae, elementum felis. Cras mollis magna placerat ante porttitor semper. In at molestie sem. Phasellus nec enim mi. Pellentesque facilisis aliquet nulla, eget feugiat magna fringilla eu. Donec posuere ligula vitae est fringilla dapibus.<br>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce erat ligula, venenatis eget bibendum nec, viverra interdum purus. Nulla nec ipsum eget augue interdum faucibus. Praesent feugiat dui ac odio eleifend semper. Mauris vestibulum lectus ut tortor lacinia consequat. Cras vulputate posuere pretium. Vestibulum faucibus tincidunt facilisis. Curabitur bibendum ultricies nisl, id tristique urna congue et. Suspendisse eget consequat odio. Fusce ornare nulla et lorem interdum ultricies et eu erat. In aliquam vestibulum neque et tincidunt. Suspendisse elementum sapien quis dictum viverra. Suspendisse eget lorem auctor, lacinia arcu ut, volutpat dui. Sed ornare lectus sapien.</p>
+					<p>We have, in our product, made use of several design patterns; these have allowed us to write well-structured and robust code.</p>
+					<h3>Asynchronus Design of Node Application</h3>
+					<div class="col-lg-11 col-lg-offset-1">
+						<p>Node.js is heavily based on the idea of using asynchronous callbacks and calls to functions. This design pattern is used to allow calling parts of code that can be computationally expensive or slow without blocking the thread. By providing a callback function as a parameter in a function call, the result we are interested in is returned whenever the called function is done and sends the result back via the callback function.<br>This pattern is one of the things that makes our web application fast and responsive.</p>
+					</div>
+					<h3>Use of RESTful Interface for Internal Communication with Search Back-end</h3>
+					<div class="col-lg-11 col-lg-offset-1">
+						<p>Internally in our application we use a RESTful API to communicate between our web application front-end and our search back-end. When indexing documents a bunch of POST requests are sent to the back-end and search queries are performed with GET requests. Using a REST API for communication makes the product more modular as each component is more easily replaceable. Most platforms and languages allow for easy integration with a REST API, so if we for example decided to rewrite the front-end, this would be very easy to do.</p>
+					</div>
+					<h3>Model-View-Controller Pattern on Web Application</h3>
+					<div class="col-lg-11 col-lg-offset-1">
+						<p>Our node.js application makes use of the Model-View-Controller pattern through the express framework. This pattern splits the responsibilities of the application up into three parts; a model, a view and a controller. Our view is our HTML templates (using jade) that generate HTML injected with the results from the controller. The model is in this case just the interfacing with the search back-end which provide the model objects. The controller takes requests from the user, sends queries to the backend and send the results to be rendered in the views.<br>This pattern makes our web application modular internally and makes our code more structured.</p>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -406,7 +442,14 @@
 			<div class="col-lg-11">
 				<h2>Testing and Evaluation</h2>
 				<div class="col-lg-11 col-lg-offset-1">
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur accumsan nec quam non fringilla. Phasellus nec consectetur nisi. Suspendisse sed nisi laoreet, condimentum mauris vitae, elementum felis. Cras mollis magna placerat ante porttitor semper. In at molestie sem. Phasellus nec enim mi. Pellentesque facilisis aliquet nulla, eget feugiat magna fringilla eu. Donec posuere ligula vitae est fringilla dapibus.<br>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce erat ligula, venenatis eget bibendum nec, viverra interdum purus. Nulla nec ipsum eget augue interdum faucibus. Praesent feugiat dui ac odio eleifend semper. Mauris vestibulum lectus ut tortor lacinia consequat. Cras vulputate posuere pretium. Vestibulum faucibus tincidunt facilisis. Curabitur bibendum ultricies nisl, id tristique urna congue et. Suspendisse eget consequat odio. Fusce ornare nulla et lorem interdum ultricies et eu erat. In aliquam vestibulum neque et tincidunt. Suspendisse elementum sapien quis dictum viverra. Suspendisse eget lorem auctor, lacinia arcu ut, volutpat dui. Sed ornare lectus sapien.</p>
+					<h3>Unit Tests</h3>
+					<div class="col-lg-11 col-lg-offset-1">
+						<p>One of our testing strategies has been to unit test where possible. This has been done for various functionalities in the node application and the indexing scripts. We have for the node application used the mocha unit test library to do our testing.<br>An example of one of the vital parts that we have created unit tests for is the context paragraph lookup which is the process of searching our pre-computed index of IDs for a certain ID and returning the IDs immediately prior and after the given ID. The paragraphs corresponding to these ids are then displayed on the view of an individual paragraph (when you press “view” on a result). The search is implemented using a binary search of an ordered list of several million IDs and has been heavily optimised since this is a common operation on a large set of data.<br>By unit testing a vital functionality like this, we have a significant level of confidence in the reliability of our code.</p>
+					</div>
+					<h3>Iterative Search Optimisation Process</h3>
+					<div class="col-lg-11 col-lg-offset-1">
+						<p>Another place where testing has been important to us is the quality of the search results. This is a somewhat subjective thing and it is not possible to simply write a unit test for this. We have throughout the course of the project been optimising the results of search queries and similarity results. Then testing process has been an iterative process in which we have tried different approaches to optimising the results by for example pre-processing the documents before indexing and post-indexing filtering of results. We have continually been in contact with our clients and they have come with feedback, expertise, and advice on how we could do better on our search and similarity functionalities.</p>
+					</div>
 				</div>
 			</div>
 		</div>
